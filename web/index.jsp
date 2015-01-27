@@ -4,6 +4,7 @@
     Author     : Juan Antonio Seco Merchán
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="es">
     <jsp:include page="bloques/head.jsp"/>
@@ -11,7 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <jsp:include page="modulos/chat.jsp"/>
+                <c:choose>
+                    <c:when test="${empty usuario}">
+                        <jsp:include page="bloques/start.jsp"/>
+                    </c:when>
+                    <c:otherwise>
+                        <jsp:include page="modulos/chat.jsp"/>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>

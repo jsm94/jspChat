@@ -7,13 +7,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * 
+ *
  * @author Juan Antonio Seco Merchán
  */
 public class Mensaje {
+
     private String user;
     private String text;
     private java.util.Date fechaYHora;
+    private ArrayList listaMensajes;
 
     public String getUser() {
         return user;
@@ -38,28 +40,33 @@ public class Mensaje {
     public void setFechaYHora(Date fechaYHora) {
         this.fechaYHora = fechaYHora;
     }
-    
-    public ArrayList<Mensaje> getMensajes(){
-        ArrayList<Mensaje> mensajes = new ArrayList<>();
-        try {
-            Connection conn = utiles.BD.conectar();
-            Statement consultaMensajes = conn.createStatement();
-            ResultSet resultado = consultaMensajes.executeQuery(
-                    "select * from mensajes order by date limit 30");
-            while (resultado.next()) {
-                Mensaje mensaje = new Mensaje();
-                mensaje.setUser(resultado.getString("user"));
-                mensaje.setText(resultado.getString("text"));
-                mensaje.setFechaYHora(resultado.getDate("date"));
-                mensajes.add(mensaje);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return mensajes;
+
+    public ArrayList<Mensaje> getListaMensajes() {
+        return listaMensajes;
     }
-    
-    public void setMensaje(){
+
+    public void setListaMensajes(boolean b) {
+        if (b) {
+            listaMensajes = new ArrayList<>();
+            try {
+                Connection conn = utiles.BD.conectar();
+                Statement consultaMensajes = conn.createStatement();
+                ResultSet resultado = consultaMensajes.executeQuery(
+                        "select * from mensajes order by date limit 30");
+                while (resultado.next()) {
+                    Mensaje mensaje = new Mensaje();
+                    mensaje.setUser(resultado.getString("user"));
+                    mensaje.setText(resultado.getString("text"));
+                    mensaje.setFechaYHora(resultado.getTimestamp("date"));
+                    listaMensajes.add(mensaje);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void setMensaje() {
         try {
             Connection conn = utiles.BD.conectar();
             PreparedStatement insertar = conn.prepareStatement("insert into mensajes set user=?, text=?");
@@ -70,5 +77,5 @@ public class Mensaje {
             Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }
