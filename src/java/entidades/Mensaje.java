@@ -12,10 +12,19 @@ import java.util.logging.Logger;
  */
 public class Mensaje {
 
+    private Integer id;
     private String user;
     private String text;
     private java.util.Date fechaYHora;
-    private ArrayList listaMensajes;
+    private ArrayList<Mensaje> listaMensajes;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUser() {
         return user;
@@ -45,24 +54,25 @@ public class Mensaje {
         return listaMensajes;
     }
 
-    public void setListaMensajes(boolean b) {
-        if (b) {
-            listaMensajes = new ArrayList<>();
-            try {
-                Connection conn = utiles.BD.conectar();
-                Statement consultaMensajes = conn.createStatement();
-                ResultSet resultado = consultaMensajes.executeQuery(
-                        "select * from mensajes order by date limit 30");
-                while (resultado.next()) {
-                    Mensaje mensaje = new Mensaje();
-                    mensaje.setUser(resultado.getString("user"));
-                    mensaje.setText(resultado.getString("text"));
-                    mensaje.setFechaYHora(resultado.getTimestamp("date"));
-                    listaMensajes.add(mensaje);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
+    public void setListaMensajes(int limit) {
+
+        listaMensajes = new ArrayList<>();
+        try {
+            Connection conn = utiles.BD.conectar();
+            Statement consultaMensajes = conn.createStatement();
+            ResultSet resultado = consultaMensajes.executeQuery(
+                    "SELECT * FROM (SELECT * FROM mensajes ORDER BY date DESC LIMIT " + limit + ") g ORDER BY g.date");
+            while (resultado.next()) {
+                Mensaje mensaje = new Mensaje();
+                mensaje.setId(resultado.getInt("id"));
+                mensaje.setUser(resultado.getString("user"));
+                mensaje.setText(resultado.getString("text"));
+                mensaje.setFechaYHora(resultado.getTimestamp("date"));
+                listaMensajes.add(mensaje);
             }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -73,6 +83,7 @@ public class Mensaje {
             insertar.setString(1, user);
             insertar.setString(2, text);
             insertar.executeUpdate();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
