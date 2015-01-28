@@ -9,7 +9,7 @@ ${mensaje.setListaMensajes(param.limit)}
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:forEach var="i" items="${mensaje.listaMensajes}">
-    <div class="mensaje new" name="${i.id}">
+    <div class="mensaje new<c:if test="${usuario.nick == i.user}"> right</c:if>" name="${i.id}">
         <p class="mensaje-user">${i.user}</p>
         <p class="mensaje-text">${i.text}</p>
         <p class="mensaje-date">

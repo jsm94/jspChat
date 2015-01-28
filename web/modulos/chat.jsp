@@ -6,12 +6,12 @@
 <h1>Chat</h1>
 <div id="chat">
     <div id="listado" class="listaMensajes"></div>
-    <div class="textBox">
-        <form id="formEnvio" class="form-inline">
+    <div class="textBox row">
+        <div id="formEnvio">
             <div class="form-group">
-                <input type="text" class="form-control" id="mensaje" name="text" maxlength="140">
+                <input type="text" class="form-control" id="textoMensaje" name="text" maxlength="140" autocomplete="off">
             </div>
-        </form>
+        </div>
         <button id="botonEnvio" type="button" class="btn btn-default">Enviar</button>
     </div>
 </div>

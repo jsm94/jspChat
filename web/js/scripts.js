@@ -9,26 +9,39 @@ $("#listado").load("modulos/listaMensajes.jsp?limit=30", function () {
 setInterval(function () {
     var id = $(".mensaje").last().attr("name");
     var limite = 30;
-    $.post("modulos/nuevoMensaje.jsp", {lastmsg: id, limit: limite}, function (result) {
+    $.post("nuevoMensaje", {"lastmsg": id, "limit": limite}, function (result) {
         if (result > 0) {
-            $('.mensaje').last().after($('<div>').load("modulos/listaMensajes.jsp?limit=" + 1, function () {
-                if ($(".listaMensajes").prop("scrollTop") > $(".listaMensajes").prop("scrollHeight") - 550) {
+            $('.mensaje').last().after($('<div>').load("modulos/listaMensajes.jsp?limit=" + result, function () {
+                if ($(".listaMensajes").prop("scrollTop") < $(".listaMensajes").prop("scrollHeight") - 200) {
                     $(".listaMensajes").prop({scrollTop: $(".listaMensajes").prop("scrollHeight")});
                 }
             }));
-        } else {
-            console.log("No hay nuevos mensajes");
-        }
+        } /*else {
+            console.log(result + " mensajes");
+        }*/
     });
     /*$("#listado").load("modulos/listaMensajes.jsp");
      if ($(".listaMensajes").prop("scrollTop") > $(".listaMensajes").prop("scrollHeight") - 550) {
      $(".listaMensajes").prop({scrollTop: $(".listaMensajes").prop("scrollHeight")});
      }*/
-}, 1000);
+}, 500);
+
+$(document).ready(function () {
+    $(window).keydown(function (event) {
+        if (event.keyCode === 13) {
+            if ($("#textoMensaje").val()) {
+                var datos = $("#textoMensaje").serialize();
+                $.post("modulos/enviarMensaje.jsp", datos, function () {
+                    $("#textoMensaje").val("");
+                });
+            }
+        }
+    });
+});
 
 $("#botonEnvio").click(function () {
-    var datos = $("#formEnvio").serializeArray();
+    var datos = $("#textoMensaje").serialize();
     $.post("modulos/enviarMensaje.jsp", datos, function () {
-        $(".listaMensajes").prop({scrollTop: $(".listaMensajes").prop("scrollHeight")});
+        $("#textoMensaje").val("");
     });
 });

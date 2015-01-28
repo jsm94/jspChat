@@ -54,6 +54,10 @@ body {
     box-shadow: 0 2px 0.5px rgba(0,0,0,0.14);
 }
 
+.right {
+    margin-left: 65%;
+}
+
 .new {
     -webkit-animation: myfirst 1s; /* Chrome, Safari, Opera */
     animation: myfirst 1s;
@@ -80,13 +84,13 @@ body {
 /* Chrome, Safari, Opera */
 @-webkit-keyframes myfirst {
     from {background: #75b18f; opacity: .0; margin-left: -100px}
-    to {background: rgb(226, 226, 226); opacity: .9;marginleft: 0px}
+    to {background: rgb(226, 226, 226); opacity: .9}
 }
 
 /* Standard syntax */
 @keyframes myfirst {
-    from {background: red;}
-    to {background: rgb(226, 226, 226);}
+    from {background: #75b18f; opacity: .0; margin-left: -100px}
+    to {background: rgb(226, 226, 226); opacity: .9}
 }
 
 /* Turn on custom 8px wide scrollbar */
