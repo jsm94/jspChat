@@ -11,7 +11,7 @@
     <jsp:include page="bloques/head.jsp"/>
     <body>
         <div class="app-wrapper">
-             <div class="container app">
+            <div class="container app">
                 <div class="row height">
                     <div class="col-md-12 col-xs-12 height">
                         <c:choose>
@@ -22,11 +22,15 @@
                                 <jsp:include page="modulos/chat.jsp"/>
                             </c:otherwise>
                         </c:choose>
+                        <footer>
+                            <div class="col-md-12 col-xs-12 pie">
+                                <p>Realizado por Juan Antonio Seco Merchán</p>
+                            </div>
+                        </footer>
                     </div>
                 </div>
             </div>
         </div>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>

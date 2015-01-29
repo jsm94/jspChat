@@ -6,6 +6,7 @@
 $("#listado").load("modulos/listaMensajes.jsp?limit=30", function () {
     $(".listaMensajes").prop({scrollTop: $(".listaMensajes").prop("scrollHeight")});
 });
+
 setInterval(function () {
     var id = $(".mensaje").last().attr("name");
     var limite = 30;
