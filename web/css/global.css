@@ -91,6 +91,14 @@ body {
     background: whitesmoke;
 }
 
+.cajaTexto2 {
+    width: 100%;
+    padding: 7px;
+    border: 0;
+    border-radius: 2px;
+    background: whitesmoke;
+}
+
 #botonEnvio {
     width: 100%;
     border: 0;

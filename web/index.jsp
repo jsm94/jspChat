@@ -4,8 +4,10 @@
     Author     : Juan Antonio Seco Merchán
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="true" %>
 <c:set var="msg" value="0" scope="session"/>
+<fmt:setBundle  var="bundle" basename="bundles.login"/>
 <!DOCTYPE html>
 <html lang="es">
     <jsp:include page="bloques/head.jsp"/>
@@ -24,7 +26,7 @@
                         </c:choose>
                         <footer>
                             <div class="col-md-12 col-xs-12 pie">
-                                <p>Realizado por Juan Antonio Seco Merchán</p>
+                                <p><fmt:message key="design" bundle="${bundle}"/> Juan Antonio Seco Merchán</p>
                             </div>
                         </footer>
                     </div>
